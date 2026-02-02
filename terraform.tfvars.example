@@ -1,0 +1,19 @@
+# AWS Configuration
+aws_region   = "us-east-2"  # Change to your preferred region
+project_name = "iac-web-app"
+
+# Network Configuration
+vpc_cidr           = "10.0.0.0/16"
+public_subnet_cidr = "10.0.1.0/24"
+
+# EC2 Configuration
+instance_type = "t2.micro"
+
+# IMPORTANT: Replace with your EC2 key pair name
+# Create one in AWS Console: EC2 > Key Pairs > Create Key Pair
+key_name = "YOUR-KEY-PAIR-NAME"  # ⚠️ CHANGE THIS
+
+# IMPORTANT: Replace with your public IP for better security
+# Find your IP: curl ifconfig.me
+# Format: "YOUR_IP/32" (e.g., "203.0.113.45/32")
+my_ip = "0.0.0.0/0"  # ⚠️ CHANGE THIS for production

@@ -4,46 +4,50 @@ A clean demonstration of Infrastructure as Code (IaC) principles using **Terrafo
 
 ## 🏗️ Architecture
 
-```
-┌───────────────────────────────────────────────────────┐
-│                         AWS Cloud                     │
-│                                                       │
-│  ┌───────────────────────────────────────────────┐    │
-│  │              VPC (10.0.0.0/16)                │    │
-│  │                                               │    │
-│  │  ┌──────────────────────────────────────┐     │    │
-│  │  │   Public Subnet (10.0.1.0/24)        │     │    │
-│  │  │                                      │     │    │
-│  │  │   ┌─────────────────────────┐        │     │    │
-│  │  │   │   EC2 Instance          │        │     │    │
-│  │  │   │   (Ubuntu 22.04)        │        │     │    │
-│  │  │   │                         │        │     │    │
-│  │  │   │  ┌──────────────────┐   │        │     │    │
-│  │  │   │  │  Nginx (Port 80) │   │        │     │    │
-│  │  │   │  └────────┬─────────┘   │        │     │    │
-│  │  │   │           │             │        │     │    │
-│  │  │   │  ┌────────▼─────────┐   │        │     │    │
-│  │  │   │  │ Flask + Gunicorn │   │        │     │    │
-│  │  │   │  │   (Port 5000)    │   │        │     │    │
-│  │  │   │  └──────────────────┘   │        │     │    │
-│  │  │   └─────────────────────────┘        │     │    │
-│  │  │                                      │     │    │
-│  │  └──────────────────────────────────────┘     │    │
-│  │                                               │    │
-│  │  Security Group:                              │    │
-│  │  • SSH (22) - Your IP                         │    │
-│  │  • HTTP (80) - 0.0.0.0/0                      │    │
-│  │  • HTTPS (443) - 0.0.0.0/0                    │    │
-│  │                                               │    │
-│  └───────────────────────────────────────────────┘    │
-│                                                       │
-└───────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph AWS["AWS Cloud"]
+        subgraph VPC["VPC (10.0.0.0/16)"]
+            subgraph PublicSubnet["Public Subnet (10.0.1.0/24)"]
+                subgraph EC2["EC2 Instance (Ubuntu)"]
+                    Nginx["Nginx (Port 80)"]
+                    Flask["Flask + Gunicorn<br/>(Port 5000)"]
+                    
+                    Nginx --> Flask
+                end
+            end
+            
+            SG["Security Group:<br/>• SSH (22) - Your IP<br/>• HTTP (80) - 0.0.0.0/0<br/>• HTTPS (443) - 0.0.0.0/0"]
+        end
+    end
+    
+    
+    Terraform["Terraform<br/>(Provision)"]
+    Ansible["Ansible<br/>(Configure)"]
+    
+    AWS --> Terraform
+    EC2 --> Ansible
 
-         ▲                                    ▲
-         │                                    │
-    Terraform                             Ansible
-   (Provision)                          (Configure)
-```
+
+    %% Styling
+    classDef awsClass fill:#FF9900,stroke:#232F3E,stroke-width:3px,color:#FFFFFF
+    classDef vpcClass fill:#4A90E2,stroke:#2E5C8A,stroke-width:3px,color:#FFFFFF
+    classDef subnetClass fill:#50C878,stroke:#2D7A4A,stroke-width:2px,color:#FFFFFF
+    classDef ec2Class fill:#E8EAF6,stroke:#5C6BC0,stroke-width:2px,color:#1A237E
+    classDef appClass fill:#E53935,stroke:#C62828,stroke-width:2px,color:#FFFFFF
+    classDef sgClass fill:#7E57C2,stroke:#4527A0,stroke-width:2px,color:#FFFFFF
+    classDef toolClass fill:#26A69A,stroke:#00796B,stroke-width:2px,color:#FFFFFF
+    
+    class AWS awsClass
+    class VPC vpcClass
+    class PublicSubnet subnetClass
+    class EC2 ec2Class
+    class Nginx,Flask appClass
+    class SG sgClass
+    class Terraform,Ansible toolClass
+    
+    linkStyle default stroke:#7F00FF,stroke-width:2px
+```  
 
 ## 🚀 What This Project Does
 

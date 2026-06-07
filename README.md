@@ -239,22 +239,6 @@ ansible-playbook playbook.yml
 - **Gunicorn** - WSGI HTTP server
 - **Nginx** - Reverse proxy and web server
 
-## 📝 License
+## Documentation formatting and structure assisted by AI tools
 
-This project is open source and available for educational purposes.
-
-
-## 🤝 Contributing
-
-Feel free to fork this project and customize it for your needs!
-
-## 🙏 Acknowledgments
-
-- Infrastructure code and deployment logic developed independently
-- Documentation formatting and structure assisted by AI tools
-- AWS, Terraform, and Ansible official documentation
-
----
-
-**Built with ❤️ using Infrastructure as Code principles**
 
